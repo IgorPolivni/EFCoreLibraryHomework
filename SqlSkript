@@ -1,0 +1,97 @@
+CREATE DATABASE LibraryDatabase;
+
+USE LibraryDatabase;
+
+CREATE TABLE Readers
+(
+Id INT PRIMARY KEY IDENTITY,
+FullName NVARCHAR(MAX) NOT NULL,
+[Login] NVARCHAR(MAX) NOT NULL,
+[Password] NVARCHAR(MAX) NOT NULL
+)
+
+INSERT INTO Readers VALUES
+('Поливин Игорь', 'Igor22', 'Poli1234'),
+('Марина Ивановна', 'Mary44', 'Ivan1234'),
+('Катя Петрова', 'katya55', 'Petrova555'),
+('Юрий Леонидович', 'Leo88', 'qwerty1234'),
+('Смирнова Любовь', 'Smit44', 'LoveLove3')
+
+
+CREATE TABLE Books
+(
+Id INT PRIMARY KEY IDENTITY,
+[Name] NVARCHAR(50) NOT NULL,
+)
+
+
+INSERT INTO Books VALUES
+('Война и мир'),
+('1984'),
+('Лолита'),
+('Гордость и предубеждения'),
+('Божественная комедия'),
+('Над пропастью во ржи'),
+('Унесенные ветром'),
+('Сто лет одиночества')
+
+
+
+CREATE TABLE Authors
+(
+Id INT PRIMARY KEY IDENTITY,
+FullName NVARCHAR(MAX) NOT NULL
+)
+
+INSERT INTO Authors VALUES
+('Лев Толстой'),
+('Владимир Набоков'),
+('Уильям Фолкнер'),
+('Джордж Оруэлл'),
+('Вирджиния Вулф'),--5
+('Джейн Остен'),
+('Данте Алигьери'),
+('Дж.Д.Сэлинджер'),
+('Габриель Гарсиа Маркес')
+
+
+
+CREATE TABLE BooksAuthors
+(
+Id INT PRIMARY KEY IDENTITY,
+BookId INT NOT NULL,
+AuthorId INT NOT NULL,
+
+CONSTRAINT FK_BooksAuthors_Book FOREIGN KEY(BookId)
+REFERENCES Books(id),
+CONSTRAINT FK_BooksAuthors_Author FOREIGN KEY(AuthorId)
+REFERENCES Authors(id)
+)
+
+
+
+INSERT INTO BooksAuthors VALUES
+(1,1),
+(2,4),
+(3,2),
+(4,6),
+(5,7),
+(6,8),
+(8,9)
+
+
+CREATE TABLE LendingBooks
+(
+Id INT PRIMARY KEY IDENTITY,
+ReaderId INT,
+CONSTRAINT FK_User_LendingBooks FOREIGN KEY(ReaderId)
+REFERENCES Readers(id),
+BookId INT,
+CONSTRAINT FK_Books_LendingBooks FOREIGN KEY(BookId)
+REFERENCES Books(id)
+)
+
+INSERT INTO LendingBooks VALUES
+(1,3),
+(3,1),
+(2,5)
